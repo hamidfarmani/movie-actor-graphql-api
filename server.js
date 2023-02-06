@@ -91,8 +91,55 @@ const rootQueryType = new GraphQLObjectType({
   }),
 });
 
+const rootMutationType = new GraphQLObjectType({
+  name: "Mutation",
+  description: "root mutation",
+  fields: () => ({
+    addMovie: {
+      type: MovieType,
+      description: "add a movie",
+      args: {
+        name: {
+          type: GraphQLNonNull(GraphQLString),
+        },
+        actors: {
+          type: new GraphQLList(GraphQLInt),
+        },
+      },
+      resolve: (parent, args) => {
+        const movie = {
+          id: movies.length + 1,
+          name: args.name,
+          actors: args.actors,
+        };
+        movies.push(movie);
+        return movie;
+      },
+    },
+
+    addActor: {
+      type: ActorType,
+      description: "add an actor",
+      args: {
+        name: {
+          type: GraphQLNonNull(GraphQLString),
+        },
+      },
+      resolve: (parent, args) => {
+        const actor = {
+          id: actors.length + 1,
+          name: args.name,
+        };
+        actors.push(actor);
+        return actor;
+      },
+    },
+  }),
+});
+
 const schema = new GraphQLSchema({
   query: rootQueryType,
+  mutation: rootMutationType,
 });
 
 app.use(
