@@ -8,22 +8,9 @@ const {
   GraphQLList,
   GraphQLNonNull,
 } = require("graphql");
+const { movies, actors } = require("./db");
 
 const app = express();
-
-const actors = [
-  { id: 1, name: "Man with id 1" },
-  { id: 2, name: "Man with id 2" },
-  { id: 3, name: "Leonardo dicaprio" },
-  { id: 4, name: "Man with id 4" },
-];
-
-const movies = [
-  { id: 1, name: "Menu", year: 2023, actors: [1, 2, 3, 4] },
-  { id: 2, name: "Elvis", year: 2023, actors: [4, 2] },
-  { id: 3, name: "Wolf of wallstreet", year: 2014, actors: [3] },
-  { id: 4, name: "Titanic", year: 1999, actors: [3] },
-];
 
 const ActorType = new GraphQLObjectType({
   name: "Actor",
